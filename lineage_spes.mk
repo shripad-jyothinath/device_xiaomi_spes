@@ -30,17 +30,45 @@ PRODUCT_MANUFACTURER := Xiaomi
 
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
-TARGET_BUILD_GRAPHENEOS_CAMERA := true
-TARGET_HAS_UDFPS := false
+# Rising Stuff
+RISING_OFFICIAL := false
+
+# Aperture Camera
+TARGET_BUILD_APERTURE_CAMERA := true
+
+# Blur Support
 TARGET_ENABLE_BLUR := true
-TARGET_SUPPORTS_QUICK_TAP := true
-TARGET_FACE_UNLOCK_SUPPORTED := true
+
+# Gapps
+WITH_GMS := true
+TARGET_CORE_GMS := true
+
+# extra flag under TARGET_CORE_GMS
+TARGET_CORE_GMS_EXTRAS := true
+
+#UDFPS animations
+TARGET_HAS_UDFPS := false
+
+# Spoof build description/fingerprint as pixel device
 TARGET_USE_PIXEL_FINGERPRINT := true
 
-#Maintainer stuff
+#Assistant flags
+TARGET_SUPPORTS_NEXT_GEN_ASSISTANT := true
 
-RISING_MAINTAINER := Shripad J
-RISING_OFFICIAL := false
+#Face unlock supported
+TARGET_FACE_UNLOCK_SUPPORTED := true
+
+#Dolby flags
+TARGET_EXCLUDES_AUDIOFX := true
+
+#Chipset
+RISING_CHIPSET := "snapdragon 680"
+
+#Maintainer
+RISING_MAINTAINER := "Shripad J"
+
+#Package type
+RISING_PACKAGE_TYPE := "PIXEL"
 
 # Overlay
 DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-lineage
