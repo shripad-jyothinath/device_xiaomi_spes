@@ -10,3 +10,11 @@
         <fqname>@1.2::INfc/default</fqname>
     </hal>
 </manifest>
+   <hal format="hidl" optional="false">
+        <name>android.frameworks.sensorservice</name>
+        <version>1.0</version>
+        <interface>
+            <name>ISensorManager</name>
+            <instance>default</instance>
+        </interface>
+    </hal>
