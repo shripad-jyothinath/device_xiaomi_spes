@@ -70,6 +70,9 @@ BOARD_AVB_RECOVERY_ROLLBACK_INDEX_LOCATION := 1
 
 BOARD_AVB_MAKE_VBMETA_IMAGE_ARGS += --flags 3
 
+#MiuiCamera
+-include vendor/spes-miuicamera/Boardconfig.mk
+
 # Bluetooth
 BOARD_HAVE_BLUETOOTH := true
 
