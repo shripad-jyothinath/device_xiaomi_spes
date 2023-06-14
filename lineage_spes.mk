@@ -27,6 +27,12 @@ RISING_OFFICIAL := false
 # Aperture Camera
 TARGET_BUILD_APERTURE_CAMERA := true
 
+# Rising Stuff
+RISING_OFFICIAL := false
+
+# Aperture Camera
+TARGET_BUILD_APERTURE_CAMERA := false
+
 # Blur Support
 TARGET_ENABLE_BLUR := true
 
