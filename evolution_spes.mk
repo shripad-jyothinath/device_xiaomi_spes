@@ -11,8 +11,8 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
 # Inherit from spes/spesn device
 $(call inherit-product, device/xiaomi/spes/device.mk)
 
-# Inherit some common LineageOS stuff.
-$(call inherit-product, vendor/lineage/config/common_full_phone.mk)
+# Inherit some common evolutionOS stuff.
+$(call inherit-product, vendor/evolution/config/common_full_phone.mk)
 
 # Additions
 $(call inherit-product-if-exists, vendor/gms/common/common-vendor.mk)
@@ -21,42 +21,14 @@ $(call inherit-product-if-exists, vendor/prebuilt-apps/config.mk)
 # Camera
 $(call inherit-product-if-exists, vendor/spes-miuicamera/miuicamera.mk)
 
-# Rising Stuff
-RISING_OFFICIAL := false
+#Evolution Stuff
 
-# Aperture Camera
-TARGET_BUILD_APERTURE_CAMERA := true
-
-# Blur Support
-TARGET_ENABLE_BLUR := true
-
-# Gapps
-WITH_GMS := true
-TARGET_CORE_GMS := true
-
-# extra flag under TARGET_CORE_GMS
-TARGET_CORE_GMS_EXTRAS := true
-
-#UDFPS animations
-TARGET_HAS_UDFPS := false
-
-# Spoof build description/fingerprint as pixel device
-TARGET_USE_PIXEL_FINGERPRINT := true
-
-#Assistant flags
-TARGET_SUPPORTS_NEXT_GEN_ASSISTANT := true
-
-#Face unlock supported
-TARGET_FACE_UNLOCK_SUPPORTED := true
-
-#Dolby flags
-TARGET_EXCLUDES_AUDIOFX := true
-
-#Package type
-RISING_PACKAGE_TYPE := PIXEL
+EVO_BUILD_TYPE := UNOFFICIAL
+TARGET_BOOT_ANIMATION_RES := 1080
+TARGET_SUPPORTS_QUICK_TAP := true
 
 # Product Specifics
-PRODUCT_NAME := lineage_spes
+PRODUCT_NAME := evolution_spes
 PRODUCT_DEVICE := spes
 PRODUCT_BRAND := Redmi
 PRODUCT_MODEL := Redmi Note 11
@@ -65,7 +37,7 @@ PRODUCT_MANUFACTURER := Xiaomi
 PRODUCT_GMS_CLIENTID_BASE := android-xiaomi
 
 # Overlay
-DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-lineage
+DEVICE_PACKAGE_OVERLAYS += $(LOCAL_PATH)/overlay-evolution
 
 # LiveDisplay
 PRODUCT_PACKAGES += \
