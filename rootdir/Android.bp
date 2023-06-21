@@ -5,11 +5,7 @@
 //
 
 // Init scripts
-sh_binary {
-    name: "init.display.refresh.sh",
-    src: "bin/init.display.refresh.sh",
     vendor: true,
-}
 
 sh_binary {
     name: "init.mdm.sh",
