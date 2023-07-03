@@ -116,9 +116,6 @@ TARGET_USES_CUSTOM_DISPLAY_INTERFACE := true
 # OTA assert
 TARGET_OTA_ASSERT_DEVICE := spes,spesn
 
-# Init
-TARGET_INIT_VENDOR_LIB := //$(DEVICE_PATH):libinit_spes
-
 # HIDL
 DEVICE_FRAMEWORK_COMPATIBILITY_MATRIX_FILE := \
     $(DEVICE_PATH)/configs/hidl/framework_compatibility_matrix.xml
