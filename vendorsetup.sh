@@ -2,6 +2,7 @@
 
 color="\033[0;32m"
 end="\033[0m"
+blue="\e[0;34m"
 
 echo -e "${color}Syncing dependencies${end}"
 sleep 1
@@ -32,5 +33,9 @@ git clone https://github.com/shripad-jyothinath/vendor_xiaomi_spes.git vendor/xi
 echo -e "${blue}Syncing Kernel(4/5)${blue}"
 #Sync Kernel tree
 git clone https://github.com/Jabiyeff/kernel_xiaomi_spes_header.git kernel/xiaomi/spes
+
+echo -e "${blue}Syncing Camera(5/5)${blue}"
+rm -rf device/xiaomi/sm6225-common-miuicamera
+git clone https://github.com/CHRISL7/android_device_xiaomi_sm6225-common-miuicamera.git device/xiaomi/sm6225-common-miuicamera
 
 echo -e "${color}Finished sync!${end}"
