@@ -53,10 +53,10 @@ TARGET_FACE_UNLOCK_SUPPORTED := true
 TARGET_EXCLUDES_AUDIOFX := true
 
 #Chipset
-RISING_CHIPSET := "Snapdragon 680"
+RISING_CHIPSET := "Snapdragon-680"
 
 #Maintainer
-RISING_MAINTAINER := "Shripad J"
+RISING_MAINTAINER := "Shripad-J"
 
 #Package type
 RISING_PACKAGE_TYPE := PIXEL
