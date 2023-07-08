@@ -37,6 +37,12 @@ TARGET_CORE_GMS := true
 # extra flag under TARGET_CORE_GMS
 TARGET_CORE_GMS_EXTRAS := true
 
+#Google Telephony
+TARGET_USE_GOOGLE_TELEPHONY := true
+
+#Google Messages
+TARGET_USE_GOOGLE_MESSAGES := true
+
 #UDFPS animations
 TARGET_HAS_UDFPS := false
 
