@@ -12,9 +12,6 @@ echo -e "${blue}Removing Unwanted stuff${blue}"
 # Remove pixel headers to avoid conflicts
 rm -rf hardware/google/pixel/kernel_headers/Android.bp
 
-#Remove compat stuff to avoid errors
-rm -rf hardware/lineage/compat
-
 #Remove already synced stuff
 rm -rf hardware/xiaomi
 rm -rf vendor/xiaomi
