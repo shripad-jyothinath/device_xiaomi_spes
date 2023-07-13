@@ -919,11 +919,6 @@
     <!-- Whether or not wcg mode should be enabled on this device -->
     <bool name="config_enableWcgMode">true</bool>
     
-    <!-- Enables or disables fading edges when marquee is enabled in TextView.
-         Off by default, since the framebuffer readback used to implement the
-         fading edges is prohibitively expensive on most GPUs. -->
-    <bool name="config_ui_enableFadingMarquee">true</bool>
-    
     <!-- The display uses different gamma curves for different refresh rates. It's hard for panel
          vendor to tune the curves to have exact same brightness for different refresh rate. So
          flicker could be observed at switch time. The issue is worse at the gamma lower end.
