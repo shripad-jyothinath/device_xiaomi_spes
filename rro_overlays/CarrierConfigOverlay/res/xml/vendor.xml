@@ -167,6 +167,8 @@
     </carrier_config>
     <carrier_config mcc="214" mnc="01">
         <boolean name="carrier_volte_available_bool" value="true" />
+        <boolean name="carrier_wfc_ims_available_bool" value="true" />
+        <boolean name="editable_wfc_mode_bool" value="true" />
     </carrier_config>
     <carrier_config mcc="214" mnc="03">
         <boolean name="carrier_volte_available_bool" value="true" />
@@ -1348,8 +1350,6 @@
         <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
         <boolean name="carrier_video_crs_supported_bool" value="true" />
         <boolean name="carrier_call_progress_notification" value="true" />
-        <boolean name="transmit_static_image" value="true" />
-        <boolean name="show_static_image_ui" value="true" />
         <string-array name="carrier_support_video_service_numbers" num="2">
             <item value="0532100860086" />
             <item value="0201008616" />
@@ -1452,8 +1452,6 @@
         <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
         <boolean name="carrier_video_crs_supported_bool" value="true" />
         <boolean name="carrier_call_progress_notification" value="true" />
-        <boolean name="transmit_static_image" value="true" />
-        <boolean name="show_static_image_ui" value="true" />
         <string-array name="carrier_support_video_service_numbers" num="2">
             <item value="0532100860086" />
             <item value="0201008616" />
@@ -1627,8 +1625,6 @@
         <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
         <boolean name="carrier_video_crs_supported_bool" value="true" />
         <boolean name="carrier_call_progress_notification" value="true" />
-        <boolean name="transmit_static_image" value="true" />
-        <boolean name="show_static_image_ui" value="true" />
         <string-array name="carrier_support_video_service_numbers" num="2">
             <item value="0532100860086" />
             <item value="0201008616" />
@@ -1692,8 +1688,6 @@
         <boolean name="carrier_allow_transfer_ims_call_bool" value="false" />
         <boolean name="carrier_video_crs_supported_bool" value="true" />
         <boolean name="carrier_call_progress_notification" value="true" />
-        <boolean name="transmit_static_image" value="true" />
-        <boolean name="show_static_image_ui" value="true" />
         <string-array name="carrier_support_video_service_numbers" num="2">
             <item value="0532100860086" />
             <item value="0201008616" />
