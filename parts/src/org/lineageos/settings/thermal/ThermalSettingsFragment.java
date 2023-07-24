@@ -1,19 +1,19 @@
 /**
  * Copyright (C) 2020 The LineageOS Project
- *
+ * <p>
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
  * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
+ * <p>
+ * http://www.apache.org/licenses/LICENSE-2.0
+ * <p>
  * Unless required by applicable law or agreed to in writing, software
  * distributed under the License is distributed on an "AS IS" BASIS,
  * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.lineageos.settings.refreshrate;
+package org.lineageos.settings.thermal;
 
 import android.annotation.Nullable;
 import android.content.Context;
@@ -25,7 +25,6 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -36,10 +35,7 @@ import android.widget.SectionIndexer;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import androidx.annotation.NonNull;
 import androidx.preference.PreferenceFragment;
-import androidx.recyclerview.widget.RecyclerView;
-import androidx.recyclerview.widget.LinearLayoutManager;
 
 import com.android.settingslib.applications.ApplicationsState;
 
@@ -51,8 +47,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class RefreshSettingsFragment extends PreferenceFragment
-        implements ApplicationsState.Callbacks {
+public class ThermalSettingsFragment extends PreferenceFragment
+        implements AdapterView.OnItemClickListener, ApplicationsState.Callbacks {
 
     private AllPackagesAdapter mAllPackagesAdapter;
     private ApplicationsState mApplicationsState;
@@ -61,8 +57,9 @@ public class RefreshSettingsFragment extends PreferenceFragment
     private Map<String, ApplicationsState.AppEntry> mEntryMap =
             new HashMap<String, ApplicationsState.AppEntry>();
 
-    private RefreshUtils mRefreshUtils;
-    private RecyclerView mAppsRecyclerView;
+    private ListView mUserListView;
+
+    private ThermalUtils mThermalUtils;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -79,28 +76,34 @@ public class RefreshSettingsFragment extends PreferenceFragment
 
         mAllPackagesAdapter = new AllPackagesAdapter(getActivity());
 
-        mRefreshUtils = new RefreshUtils(getActivity());
+        mThermalUtils = new ThermalUtils(getActivity());
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
-            Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.refresh_layout, container, false);
+                             Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.thermal_layout, container, false);
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
     }
 
     @Override
     public void onViewCreated(final View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mAppsRecyclerView = view.findViewById(R.id.refresh_rv_view);
-        mAppsRecyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        mAppsRecyclerView.setAdapter(mAllPackagesAdapter);
+        mUserListView = view.findViewById(R.id.thermal_list_view);
+        mUserListView.setAdapter(mAllPackagesAdapter);
+        mUserListView.setOnItemClickListener(this);
     }
 
 
     @Override
     public void onResume() {
         super.onResume();
+        getActivity().setTitle(getResources().getString(R.string.thermal_title));
         rebuild();
     }
 
@@ -110,6 +113,12 @@ public class RefreshSettingsFragment extends PreferenceFragment
 
         mSession.onPause();
         mSession.onDestroy();
+    }
+
+    @Override
+    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+        ViewHolder holder = (ViewHolder) view.getTag();
+        holder.mode.performClick();
     }
 
     @Override
@@ -194,17 +203,25 @@ public class RefreshSettingsFragment extends PreferenceFragment
 
     private int getStateDrawable(int state) {
         switch (state) {
-            case RefreshUtils.STATE_STANDARD:
-                return R.drawable.ic_refresh_60;
-            case RefreshUtils.STATE_HIGH:
-                return R.drawable.ic_refresh_90;
-            case RefreshUtils.STATE_DEFAULT:
+            case ThermalUtils.STATE_BENCHMARK:
+                return R.drawable.ic_thermal_benchmark;
+            case ThermalUtils.STATE_BROWSER:
+                return R.drawable.ic_thermal_browser;
+            case ThermalUtils.STATE_CAMERA:
+                return R.drawable.ic_thermal_camera;
+            case ThermalUtils.STATE_DIALER:
+                return R.drawable.ic_thermal_dialer;
+            case ThermalUtils.STATE_GAMING:
+                return R.drawable.ic_thermal_gaming;
+            case ThermalUtils.STATE_STREAMING:
+                return R.drawable.ic_thermal_streaming;
+            case ThermalUtils.STATE_DEFAULT:
             default:
-                return R.drawable.ic_refresh_default;
+                return R.drawable.ic_thermal_default;
         }
     }
 
-    private class ViewHolder extends RecyclerView.ViewHolder {
+    private static class ViewHolder {
         private TextView title;
         private Spinner mode;
         private ImageView icon;
@@ -212,7 +229,6 @@ public class RefreshSettingsFragment extends PreferenceFragment
         private ImageView stateIcon;
 
         private ViewHolder(View view) {
-            super(view);
             this.title = view.findViewById(R.id.app_name);
             this.mode = view.findViewById(R.id.app_mode);
             this.icon = view.findViewById(R.id.app_icon);
@@ -223,17 +239,28 @@ public class RefreshSettingsFragment extends PreferenceFragment
         }
     }
 
-    private class ModeAdapter extends BaseAdapter {
+    private static class ModeAdapter extends BaseAdapter {
 
         private final LayoutInflater inflater;
+        private final TypedValue textColorSecondary;
+        private final int textColor;
         private final int[] items = {
-                R.string.refresh_default,
-                R.string.refresh_standard,
-                R.string.refresh_high
+                R.string.thermal_default,
+                R.string.thermal_benchmark,
+                R.string.thermal_browser,
+                R.string.thermal_camera,
+                R.string.thermal_dialer,
+                R.string.thermal_gaming,
+                R.string.thermal_streaming
         };
 
         private ModeAdapter(Context context) {
             inflater = LayoutInflater.from(context);
+
+            textColorSecondary = new TypedValue();
+            context.getTheme().resolveAttribute(com.android.internal.R.attr.textColorSecondary,
+                    textColorSecondary, true);
+            textColor = context.getColor(textColorSecondary.resourceId);
         }
 
         @Override
@@ -262,25 +289,41 @@ public class RefreshSettingsFragment extends PreferenceFragment
             }
 
             view.setText(items[position]);
+            view.setTextColor(textColor);
             view.setTextSize(14f);
+
             return view;
         }
     }
 
-    private class AllPackagesAdapter extends RecyclerView.Adapter<ViewHolder>
+    private class AllPackagesAdapter extends BaseAdapter
             implements AdapterView.OnItemSelectedListener, SectionIndexer {
 
+        private final LayoutInflater mInflater;
+        private final ModeAdapter mModesAdapter;
         private List<ApplicationsState.AppEntry> mEntries = new ArrayList<>();
         private String[] mSections;
         private int[] mPositions;
 
         public AllPackagesAdapter(Context context) {
+            mInflater = LayoutInflater.from(context);
+            mModesAdapter = new ModeAdapter(context);
             mActivityFilter = new ActivityFilter(context.getPackageManager());
         }
 
         @Override
-        public int getItemCount() {
+        public int getCount() {
             return mEntries.size();
+        }
+
+        @Override
+        public Object getItem(int position) {
+            return mEntries.get(position);
+        }
+
+        @Override
+        public boolean hasStableIds() {
+            return true;
         }
 
         @Override
@@ -288,35 +331,37 @@ public class RefreshSettingsFragment extends PreferenceFragment
             return mEntries.get(position).id;
         }
 
-        @NonNull
         @Override
-        public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            return new ViewHolder(LayoutInflater.from(parent.getContext())
-                    .inflate(R.layout.refresh_list_item, parent, false));
-        }
-
-        @Override
-        public void onBindViewHolder(ViewHolder holder, int position) {
-            Context context = holder.itemView.getContext();
-            ApplicationsState.AppEntry entry = mEntries.get(position);
-            if (entry == null) {
-                return;
+        public View getView(int position, View convertView, ViewGroup parent) {
+            ViewHolder holder;
+            if (convertView == null) {
+                holder = new ViewHolder(mInflater.inflate(
+                        R.layout.thermal_list_item, parent, false));
+                holder.mode.setAdapter(mModesAdapter);
+                holder.mode.setOnItemSelectedListener(this);
+            } else {
+                holder = (ViewHolder) convertView.getTag();
             }
 
-            holder.mode.setAdapter(new ModeAdapter(context));
-            holder.mode.setOnItemSelectedListener(this);
+            ApplicationsState.AppEntry entry = mEntries.get(position);
+
+            if (entry == null) {
+                return holder.rootView;
+            }
+
             holder.title.setText(entry.label);
-            holder.title.setOnClickListener(v -> holder.mode.performClick());
             mApplicationsState.ensureIcon(entry);
             holder.icon.setImageDrawable(entry.icon);
-            int packageState = mRefreshUtils.getStateForPackage(entry.info.packageName);
-            holder.mode.setSelection(packageState, false);
+            holder.mode.setSelection(mThermalUtils.getStateForPackage(entry.info.packageName),
+                    false);
             holder.mode.setTag(entry);
-            holder.stateIcon.setImageResource(getStateDrawable(packageState));
+            holder.stateIcon.setImageResource(getStateDrawable(
+                    mThermalUtils.getStateForPackage(entry.info.packageName)));
+            return holder.rootView;
         }
 
         private void setEntries(List<ApplicationsState.AppEntry> entries,
-                List<String> sections, List<Integer> positions) {
+                                List<String> sections, List<Integer> positions) {
             mEntries = entries;
             mSections = sections.toArray(new String[sections.size()]);
             mPositions = new int[positions.size()];
@@ -330,11 +375,32 @@ public class RefreshSettingsFragment extends PreferenceFragment
         @Override
         public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
             final ApplicationsState.AppEntry entry = (ApplicationsState.AppEntry) parent.getTag();
-            int currentState = mRefreshUtils.getStateForPackage(entry.info.packageName);
-            if (currentState != position) {
-                mRefreshUtils.writePackage(entry.info.packageName, position);
-                notifyDataSetChanged();
+            switch (position) {
+                case ThermalUtils.STATE_DEFAULT:
+                    mThermalUtils.writePackage(entry.info.packageName, ThermalUtils.STATE_DEFAULT);
+                    break;
+                case ThermalUtils.STATE_BENCHMARK:
+                    mThermalUtils.writePackage(entry.info.packageName,
+                            ThermalUtils.STATE_BENCHMARK);
+                    break;
+                case ThermalUtils.STATE_BROWSER:
+                    mThermalUtils.writePackage(entry.info.packageName, ThermalUtils.STATE_BROWSER);
+                    break;
+                case ThermalUtils.STATE_CAMERA:
+                    mThermalUtils.writePackage(entry.info.packageName, ThermalUtils.STATE_CAMERA);
+                    break;
+                case ThermalUtils.STATE_DIALER:
+                    mThermalUtils.writePackage(entry.info.packageName, ThermalUtils.STATE_DIALER);
+                    break;
+                case ThermalUtils.STATE_GAMING:
+                    mThermalUtils.writePackage(entry.info.packageName, ThermalUtils.STATE_GAMING);
+                    break;
+                case ThermalUtils.STATE_STREAMING:
+                    mThermalUtils.writePackage(entry.info.packageName,
+                            ThermalUtils.STATE_STREAMING);
+                    break;
             }
+            notifyDataSetChanged();
         }
 
         @Override
@@ -352,7 +418,7 @@ public class RefreshSettingsFragment extends PreferenceFragment
 
         @Override
         public int getSectionForPosition(int position) {
-            if (position < 0 || position >= getItemCount()) {
+            if (position < 0 || position >= getCount()) {
                 return -1;
             }
 
