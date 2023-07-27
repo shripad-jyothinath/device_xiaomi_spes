@@ -5,3 +5,15 @@ allow platform_app sysfs_msm_subsys:dir search;
 allow platform_app hal_dms_hwservice:hwservice_manager find;
 binder_call(platform_app, hal_dms_default)
 get_prop(platform_app, audio_config_prop)
+
+#Add some more support for MIUI camera app
+typeattribute platform_app system_executes_vendor_violators;
+
+allow platform_app app_data_file:file execute;
+allow platform_app vendor_file:file { read open getattr map execute};
+allow platform_app hal_xiaomi_camera_hwservice:hwservice_manager find;
+
+binder_call(platform_app, hal_camera_default)
+
+get_prop(platform_app, vendor_camera_prop)
+get_prop(platform_app, vendor_fingerprint_prop)
