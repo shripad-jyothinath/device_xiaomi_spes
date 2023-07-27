@@ -42,7 +42,8 @@ git clone https://github.com/CHRISL7/android_device_xiaomi_sm6225-common-miuicam
 echo -e "${blue}Updating ota(6/7)${blue}"
 rm -rf vendor/risingOTA
 git clone https://github.com/shripad-jyothinath/android_vendor_RisingOTA vendor/risingOTA
-
+rm -rf packages/apps/Updater
+git clone https://github.com/shripad-jyothinath/android_packages_apps_Updater.git packages/apps/Updater
 echo "${blue}Syncing webview (7/7)${blue}"
 rm -rf external/chromium-webview/prebuilt/*
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
