@@ -1,8 +1,11 @@
+#!/bin/bash
 # ROM source patches
 
 color="\033[0;32m"
 end="\033[0m"
 blue="\e[0;34m"
+
+base64 -d device/xiaomi/spes/configs/camera/secret > device/xiaomi/spes/configs/camera/st_license.lic
 
 echo -e "${color}Syncing dependencies${end}"
 sleep 1
