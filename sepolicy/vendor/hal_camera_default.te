@@ -1,10 +1,3 @@
-#Xiaomi Camera
-type hal_xiaomi_camera_hwservice, hwservice_manager_type;
-add_hwservice(hal_camera_default, hal_xiaomi_camera_hwservice)
-allow hal_camera_default system_server:binder call;
-
-binder_call(hal_camera_default, platform_app)
-
 # For interfacing with PowerHAL
 hal_client_domain(hal_camera_default, hal_power)
 
@@ -30,8 +23,6 @@ allow hal_camera_default {
 allow hal_camera_default proc_stat:file read;
 
 set_prop(hal_camera_default, vendor_camera_prop)
-
-get_prop(hal_camera_default, vendor_fingerprint_prop)
 
 allow hal_camera_default socket_device:sock_file write;
 allow hal_camera_default proc_stat:file { open };
