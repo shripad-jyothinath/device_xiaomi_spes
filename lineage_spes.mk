@@ -25,7 +25,7 @@ $(call inherit-product-if-exists, vendor/xiaomi/sm6225-common-miuicamera/config.
 RISING_OFFICIAL := false
 
 # Aperture Camera
-TARGET_BUILD_APERTURE_CAMERA := false
+TARGET_BUILD_APERTURE_CAMERA := true
 
 # Blur Support
 TARGET_ENABLE_BLUR := true
