@@ -52,6 +52,8 @@ rm -rf external/chromium-webview/prebuilt/*
 rm -rf .repo/projects/external/chromium-webview/prebuilt/*.git
 rm -rf .repo/project-objects/LineageOS/android_external_chromium-webview_prebuilt_*.git
 
-#Have to sync webview from lineage os manually
+#Change some things (Might or might not work!)
+rm -rf external/chromium-webview
+git clone https://github.com/LineageOS/android_external_chromium-webview.git external/chromium-webview
 
 echo -e "${color}Finished sync!${end}"
