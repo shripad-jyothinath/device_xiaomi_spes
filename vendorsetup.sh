@@ -36,7 +36,7 @@ echo -e "${blue}Syncing vendor(3/7)${blue}"
 git clone https://github.com/shripad-jyothinath/vendor_xiaomi_spes.git vendor/xiaomi/spes
 echo -e "${blue}Syncing Kernel(4/7)${blue}"
 #Sync Kernel tree
-git clone https://github.com/Jabiyeff/kernel_xiaomi_spes_header.git kernel/xiaomi/spes
+git clone https://github.com/mi-sdm680/android_kernel_xiaomi_sm6225.git kernel/xiaomi/sm6225
 
 echo -e "${blue}Syncing Camera(5/7)${blue}"
 rm -rf device/xiaomi/sm6225-common-miuicamera
